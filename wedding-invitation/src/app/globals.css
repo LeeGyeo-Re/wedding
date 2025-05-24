@@ -1,0 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  /* Example of defining some theme colors - can be expanded */
+  --primary-color: #D1A0A0; /* A soft rose color */
+  --secondary-color: #8C6A6A; /* A muted brown for text */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+    --primary-color: #B08080; /* Darker rose for dark mode */
+    --secondary-color: #A68A8A; /* Lighter brown for dark mode */
+  }
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; /* Changed to a more common sans-serif stack */
+}
+
+/* Adding custom animations & utility classes */
+@layer utilities {
+  .animate-fadeIn {
+    animation: fadeIn 0.8s ease-out forwards;
+  }
+  .animate-fadeInUp {
+    animation: fadeInUp 0.8s ease-out forwards;
+  }
+  .animate-fadeInDelay {
+    animation: fadeIn 0.8s ease-out 0.4s forwards;
+    opacity: 0; /* Start hidden for delayed animation */
+  }
+  .animate-fadeInDelayMore {
+    animation: fadeIn 0.8s ease-out 0.8s forwards;
+    opacity: 0; /* Start hidden for delayed animation */
+  }
+  
+  /* Example custom text color utility */
+  .text-primary {
+    color: var(--primary-color);
+  }
+  .text-secondary {
+    color: var(--secondary-color);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

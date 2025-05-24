@@ -1,0 +1,39 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main # Or master, depending on your default branch name
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20' # Specify your Node.js version
+
+      - name: Install dependencies
+        working-directory: ./wedding-invitation # Adjust if your project is in a subdirectory of the repo
+        run: npm ci
+
+      - name: Build project
+        working-directory: ./wedding-invitation # Adjust if your project is in a subdirectory of the repo
+        run: npm run build
+        env:
+          # Ensure basePath is correctly used during build if needed by any scripts
+          # For `next build` with `basePath` in `next.config.js`, this is usually handled automatically.
+          BASE_PATH: /wedding-invitation
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./wedding-invitation/out # The directory Next.js exports to
+          # user_name: 'github-actions[bot]' # Optional: Custom commit user
+          # user_email: 'github-actions[bot]@users.noreply.github.com' # Optional: Custom commit email
+          # commit_message: 'Deploy to GitHub Pages' # Optional: Custom commit message
